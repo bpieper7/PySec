@@ -24,7 +24,7 @@ def main():
     except:
         print 'error'
 
-    socket.setdefaulttimeout(.2)
+    socket.setdefaulttimeout( .2 )
     sock = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
     for host in targetHosts:
         for port in targetPorts:
