@@ -6,9 +6,8 @@ ex: python port_scanner.py 192.168.0.1
 ex: python port_scanner.py 192.168.0.1,192.168.1.1 -p 21,22,80
 '''
 
-
-import socket
 import argparse
+import socket
 
 def main():
     try:
