@@ -11,19 +11,19 @@ import argparse
 import hashlib
 
 def main():
-    dict = { 'md5' : useMD5, 'sha1' : useSHA1, 'sha224' : useSHA224, 'sha256' : useSHA256, 'sha384' : useSHA384, 'useSHA512' : useSHA512, '' : useAllDecryption }
+    dict = { 'md5' : useMD5, 'sha1' : useSHA1, 'sha224' : useSHA224, 'sha256' : useSHA256, 'sha384' : useSHA384, 'sha512' : useSHA512, '' : useAllDecryption }
     try:
         parser = argparse.ArgumentParser( description='Enter type of encryption method, none will attempt to run all' )
-        parser.add_argument( 'type', type=str, nargs='*', help='Will only run the md5 decryption method' )
+        parser.add_argument( 'type', type=str, nargs='*', help='Will only run specified encryption type. md5 sha1 sha224 sha256 sha384 sha512 or none (runs all)' )
         args = parser.parse_args()
-        types = args.type
+        types = map( lambda x:x.lower(), args.type )
     except:
         print 'error getting input'
         
     with open( '..\lib\dictionary.txt', 'r' ) as dictionary:
         with open( '..\lib\hashedPasswords.txt', 'r' ) as hashedPasswords:
             hashedWords = hashedPasswords.readlines()
-            if not types:
+            if not types:   # if the user did not specify a decryption type
                 useAllDecryption( hashedWords, dictionary )
             else:
                 for password in dictionary.readlines():
@@ -34,16 +34,16 @@ def main():
                 
 def useAllDecryption( hashedWords, dictionary ):
     for password in dictionary.readlines():
-        if useMD5( password.strip('\n') ) in hashedWords:
-            print "[+] Password is %s for hash %s\n\n" % ( password, useMD5( password ) )
-        elif useSHA1( password.strip('\n') ) in hashedWords:
-            print "[+] Password is %s for hash %s\n\n" % ( password, useSHA1( password ) )
-        elif useSHA224( password.strip('\n') ) in hashedWords:
-            print "[+] Password is %s for hash %s\n\n" % ( password, useSHA224( password ) )
-        elif useSHA256( password.strip('\n') ) in hashedWords:
-            print "[+] Password is %s for hash %s\n\n" % ( password, useSHA256( password ) )
-        elif useSHA512( password.strip('\n') ) in hashedWords:
-            print "[+] Password is %s for hash %s\n\n" % ( password, useSHA512( password ) )
+        if useMD5( password.strip( '\n' ) ) in hashedWords:
+            print "[+] Password is %s for hash %s\n\n" % ( password, useMD5( password.strip( '\n' ) ) )
+        elif useSHA1( password.strip( '\n' ) ) in hashedWords:
+            print "[+] Password is %s for hash %s\n\n" % ( password, useSHA1( password.strip( '\n' ) ) )
+        elif useSHA224( password.strip( '\n' ) ) in hashedWords:
+            print "[+] Password is %s for hash %s\n\n" % ( password, useSHA224( password.strip( '\n' ) ) )
+        elif useSHA256( password.strip( '\n' ) ) in hashedWords:
+            print "[+] Password is %s for hash %s\n\n" % ( password, useSHA256( password.strip( '\n' ) ) )
+        elif useSHA512( password.strip( '\n' ) ) in hashedWords:
+            print "[+] Password is %s for hash %s\n\n" % ( password, useSHA512( password.strip( '\n' ) ) )
             
 def useMD5( password ):
     return hashlib.md5( password ).hexdigest()
