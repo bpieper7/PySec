@@ -22,7 +22,7 @@ def main():
             targetPorts = map( int, args.ports )
 
     except:
-        print 'error'
+        print 'Error getting information from user'
 
     socket.setdefaulttimeout( .2 )
     sock = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
